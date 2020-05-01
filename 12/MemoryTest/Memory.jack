@@ -1,0 +1,116 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+    static Array memory;
+    static Array freeList;
+
+    /** Initializes the class. */
+    function void init() {
+        let memory = 0;
+        let freeList = 2048;
+        let freeList[0] = 16383 - 2048 + 1;
+        let freeList[1] = null;
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        return memory[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        let memory[address] = value;
+        return;
+    }
+
+    function int _findFreeBlock(int size) {
+        var Array block, prev;
+        var int leftoverSize;
+        let block = freeList;
+        let prev = block;
+        while(~(block = null)) {
+            if (block[0] > size) {
+                // Update the freeList.
+                let prev[1] = block[1];
+
+                // The block size is too small, so return all of it.
+                if((block[0] - size) < 2) {
+                    return block + 1;
+                }
+                // Return the bottom portion of the block.
+                else {
+                    // Update the size of the portion left.
+                    let block[0] = block[0] - size - 1;
+                    // Assign size of the portion being returned.
+                    do Memory.poke(block + block[0], size + 1);
+                    // Return the appropriate block.
+                    return block + block[0] + 1;
+                }
+            }
+            else {
+                // Go to the next block.
+                let prev = block;
+                let block = block[1];
+            }
+        }
+        return -1;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function int alloc(int size) {
+        var Array block;
+        let block = Memory._findFreeBlock(size);
+        // Defragment and try again.
+        if(block = -1) {
+            do Memory._defragment();
+            return Memory._findFreeBlock(size);
+        }
+        else {
+            return block;
+        }
+    }
+
+    // Attempt to merge physically subsequent which may be logically separate.
+    function void _defragment() {
+        var Array block;
+        let block = freeList;
+        while(~(block[1] = null)) {
+            // If the memory addresses are consecutive..
+            if((block + block[0]) = block[1]) {
+                // Update the block size: current value + value at next block.
+                let block[0] = block[0] + Memory.peek(block[1]);
+                // block now points to the next block.
+                let block[1] = Memory.peek(block[1] + 1);
+            }
+            // Try to merge the subsequent block.
+            else {
+                let block = block[1];
+            }
+        }
+        return;
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+        var Array segment;
+        let segment = o - 1;
+        let segment[0] = o[-1];
+
+        // Insert just after the first freeList segment.
+        let segment[1] = freeList[1];
+        let freeList[1] = segment;
+        do Memory._defragment();
+        return;
+    }    
+}

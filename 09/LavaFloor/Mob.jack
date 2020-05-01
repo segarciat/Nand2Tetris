@@ -1,0 +1,57 @@
+class Mob {
+  field int x;
+  field int y;
+  field int size;
+  
+  constructor Mob new(){
+    let size = 10;
+    let x = 500;
+    let y = 240;
+    return this;
+  }
+
+  method void dispose(){
+    do Memory.deAlloc(this);
+    return;
+  }
+
+  method int getX() {
+    return x;
+  }
+
+  method int getY() {
+    return y;
+  }
+
+  method int getSize() {
+    return size;
+  }
+  
+  method void reset() {
+    do erase();
+    let x = 500;
+    do draw();
+    return;
+  }
+
+  method void draw() {
+    do Screen.setColor(true);
+    do Screen.drawRectangle(x, y, x + size, y + size);
+    return;
+  }
+
+  method void erase() {
+    do Screen.setColor(false);
+    do Screen.drawRectangle(x, y, x + size, y + size);
+    return;
+  }
+
+  method void move() {
+    if(x > 2){
+      do erase();
+      let x = x - 2;
+      do draw();
+    }
+    return;
+  }
+}
