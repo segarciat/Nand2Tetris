@@ -12,9 +12,9 @@ along with its it compiler hierarchy and 'operating system'. The book focused on
 The harware part of the journey was split between five chapters:
 1. **Boolean Logic**: Construction of boolean gates based on the Nand gate, such as Multiplexors and Xor gates. Written in Hardware Description Langauge (HDL).
 2. **Boolean Arithmetic**: Construction of the Hack ALU chip using HDL.
-3. Sequential Logic: Construction of sequental chips for storage, such as registers, RAM chips, and a program computer, in HDL.
-4. Machine Language: Low-level programming in the Hack platform. Particularly, writing simple .asm (assembly) programs.
-5. Computer Architecture: Construction of Hack, specifically: the CPU chip, the Memory chip, and the Computer chip.
+3. **Sequential Logic**: Construction of sequental chips for storage, such as registers, RAM chips, and a program computer, in HDL.
+4. **Machine Language**: Low-level programming in the Hack platform. Particularly, writing simple .asm (assembly) programs.
+5. **Computer Architecture**: Construction of Hack, specifically: the CPU chip, the Memory chip, and the Computer chip.
 
 ## The software hierarchy projects
 The software part of the journey was split between 7 chapters. I chose to write my projects in C++. More details follow:
