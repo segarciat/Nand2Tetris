@@ -18,6 +18,7 @@ The harware part of the journey was split between five chapters:
 
 ## The software hierarchy projects
 The software part of the journey was split between 7 chapters. I chose to write my projects in C++. More details follow:
+
 6. **Assembler**: Construction of an assembler, which takes in Hack assembly files and outputs Hack binary code files.
 7. **Virtual Machine I: Stack Arithmetic**: First part of virtual machine backend, which handles stack arithmetic.
 8. **Virtual Machine II: Program Flow**: Second part of the virtual machine backend, which handles program flow (if, while, functions).
