@@ -17,27 +17,8 @@ CHIP DMux4Way {
 
     PARTS:
     // Put your code here:
-
     DMux(in=in, sel=sel[0], a=wa, b=wb);
-    DMux(in=in, sel=sel[0], a=wc, b=wd);
+    // If ta was 1, then b=d=0, and only one of a or c is 1.
     DMux(in=wa, sel=sel[1], a=a, b=c);
     DMux(in=wb, sel=sel[1], a=b, b=d);
-
-
-    // Alternative with And gates.
-
-    //Not(in=sel[0], out=notsel0);
-    //Not(in=sel[1], out=notsel1);
-
-    //And(a=in, b=notsel0, out=wa);
-    //And(a=in, b=sel[0], out=wb);
-
-    //And(a=in, b=notsel0, out=wc);
-    //And(a=in, b=sel[0], out=wd);
-
-    //And(a=wa, b=notsel1, out=a);
-    //And(a=wc, b=sel[1], out=c);
-
-    //And(a=wb, b=notsel1, out=b);
-    //And(a=wd, b=sel[1], out=d);
 }
