@@ -14,15 +14,6 @@ CHIP Bit {
     OUT out;
 
     PARTS:
-    // Put your code here:
-    Mux(a=prein, b=in, sel=load, out=newout);
-    
-    /* 
-    After 'tock' phase, (but not yet in our 
-    current 'tick' phase) prein will equal newout. 
-    */
-    DFF(in=newout, out=prein);
-
-    // prein != newout yet. It will be after 'tock'.
-    And(a=prein, b=true, out=out);
+    DFF(in=v, out=out, out=old);
+    Mux(a=old, b=in, sel=load, out=v);
 }
