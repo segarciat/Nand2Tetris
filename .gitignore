@@ -8,10 +8,10 @@
 *.sln
 *.vcx*
 *.vm
-06/add
-06/max
-06/pong
-06/rect
+06-Assembler/add
+06-Assembler/max
+06-Assembler/pong
+06-Assembler/rect
 07/MemoryAccess
 07/StackArithmetic
 08/FunctionCalls
