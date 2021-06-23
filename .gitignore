@@ -12,8 +12,8 @@
 06-Assembler/max
 06-Assembler/pong
 06-Assembler/rect
-07/MemoryAccess
-07/StackArithmetic
+07-VM1StackArithmetic/MemoryAccess
+07-VM1StackArithmetic/StackArithmetic
 08/FunctionCalls
 08/ProgramFlow
 09/Average
