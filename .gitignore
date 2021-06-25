@@ -14,8 +14,8 @@
 06-Assembler/rect
 07-VM1StackArithmetic/MemoryAccess
 07-VM1StackArithmetic/StackArithmetic
-08/FunctionCalls
-08/ProgramFlow
+08-VM2ProgramControl/FunctionCalls
+08-VM2ProgramControl/ProgramFlow
 09/Average
 09/BitmapEditor
 09/Fraction
