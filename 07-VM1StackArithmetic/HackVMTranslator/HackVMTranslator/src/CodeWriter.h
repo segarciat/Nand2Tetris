@@ -19,10 +19,14 @@ private:
 	std::ofstream m_Ofs;
 	// Name of VM file currently being translated to assembly
 	std::string m_CurrentFile;
+	std::string m_CurrentFunction;
 	// Used to ensure label uniqueness (disambiguity)
 	int m_LabelCount;
 	static const std::unordered_map<std::string, std::string> s_CmdMap;
 	static const std::unordered_map<std::string, std::string> s_SgmtMap;
+
+	// Creates a unique label by using m_LabelCount
+	const std::string UniqueLabel(const std::string& label);
 public:
 	explicit CodeWriter(const std::string& name);
 	~CodeWriter();
