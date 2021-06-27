@@ -1,0 +1,80 @@
+class Player {
+  field int x, y;
+  field int vy, vx;
+  field int size;
+  
+  constructor Player new(int Ax, int Ay, int Asize) {
+    let x = Ax;
+    let y = Ay;
+    let vy = 0;
+    let vx  = 0;
+    let size = Asize;
+    do draw();
+    return this;
+  }
+
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+
+  method int getX() {
+    return x;
+  }
+
+  method int getY() {
+    return y;
+  }
+
+  method int size() {
+    return size;
+  }
+
+   /** Draws the square on the screen. */
+   method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, y - size, x + size, y);
+      return;
+   }
+
+   /** Erases the square from the screen. */
+   method void erase() {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y - size, x + size, y);
+      return;
+   }
+
+  method void jump() {
+    if (y = 255) {let vy = -20;}
+    return;
+  }
+
+  method void applyGravity() {
+    if (y < 255) { let vy = vy + 1;}   // Decrease jumping speed (like gravity)
+    let y = y + vy;
+    if (y > 255) {let y = 255;}
+    return;
+  }
+
+   /** Moves the square left by 2 pixels. */
+   method void moveLeft() {
+      if (x > 1) { let x = x - 2; }
+      return;
+   }
+
+   /** Moves the square right by 2 pixels. */
+   method void moveRight() {
+      if ((x + size) < 510) { let x = x + 2;}
+      return;
+   }
+
+    method void move(int dir) {
+      do erase();
+      do applyGravity();
+      if (dir = -1) { do moveLeft(); } 
+      if (dir = 1) { do moveRight();}
+      do draw();
+      do Sys.wait(5);
+      return;
+    }
+}

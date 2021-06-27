@@ -1,0 +1,72 @@
+class DodgeGame {
+  field Player player;
+  field Mob mob;
+  field int score;
+
+  constructor DodgeGame new() {
+    let player = Player.new(256, 255, 30);
+    let mob = Mob.new(511 - 30, 255, 30);
+    let score = 0;
+    return this;
+  }
+
+  method void dispose() {
+    do player.dispose();
+    do mob.dispose();
+    do Memory.deAlloc(this);
+    return;
+  }
+
+  method void drawScore() {
+    let score = score + 1;
+    do Output.moveCursor(0, 16);
+    do Output.printString("Score: ");
+    do Output.printInt(score);
+    return;
+  }
+
+  method boolean checkCollision() {
+    if (player.getX() > (mob.getX() + mob.size()) ) { return false;} // player right of mob
+    if (mob.getX() > (player.getX() + player.size())) { return false;}  // mob right of player
+    if (player.getY() < (mob.getY() - mob.size())) { return false;} // player above mob
+    return true;
+  }
+
+  method void run() {
+    var int direction;
+    var char key;
+    var boolean exit;
+    var boolean didCollide;
+    let exit = false;
+    let direction = 0;
+    let didCollide = false;
+
+    while (~exit) {
+      // Wait for a key to be pressed
+      while((key = 0) & ~didCollide) {
+        let key = Keyboard.keyPressed();
+        do mob.move();
+        do player.move(direction);
+        let didCollide = checkCollision();
+        do drawScore();
+      }
+
+      if (key = 81)  { let exit = true; }     // q key
+      if (key = 131) { do player.jump(); }   // space bar
+      if (key = 130) { let direction = -1; }   // left arrow
+      if (key = 132) { let direction = 1; }   // right arrow
+
+      while (~(key = 0) & ~didCollide) {
+        let key = Keyboard.keyPressed();
+        do mob.move();
+        do player.move(direction);
+        let didCollide = checkCollision();
+        do drawScore();
+      }
+      if (didCollide) {
+        let exit = true;
+      }
+    }
+    return;
+  }
+}

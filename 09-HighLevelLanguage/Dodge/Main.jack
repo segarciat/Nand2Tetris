@@ -1,0 +1,9 @@
+class Main {
+  function void main() {
+    var DodgeGame game;
+    let game = DodgeGame.new();
+    do game.run();
+    do game.dispose();
+    return;
+  }
+}
