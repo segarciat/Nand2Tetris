@@ -23,9 +23,9 @@
 09-HighLevelLanguage/List
 09-HighLevelLanguage/Square
 09-HighLevelLanguage/*.pdf
-10/ArrayTest
-10/ExpressionLessSquare
-10/Square
+10-Compiler1SyntaxAnalysis/ArrayTest
+10-Compiler1SyntaxAnalysis/ExpressionLessSquare
+10-Compiler1SyntaxAnalysis/Square
 11/Average
 11/ComplexArrays
 11/Pong
