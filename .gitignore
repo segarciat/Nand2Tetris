@@ -26,10 +26,10 @@
 10-Compiler1SyntaxAnalysis/ArrayTest
 10-Compiler1SyntaxAnalysis/ExpressionLessSquare
 10-Compiler1SyntaxAnalysis/Square
-11/Average
-11/ComplexArrays
-11/Pong
-11/Seven
-11/Square
+11-Compiler2CodeGeneration/Average
+11-Compiler2CodeGeneration/ComplexArrays
+11-Compiler2CodeGeneration/Pong
+11-Compiler2CodeGeneration/Seven
+11-Compiler2CodeGeneration/Square
 13
 demo
