@@ -183,10 +183,7 @@ void CompilationEngine::CompileDo()
 	CompileKeyWord(jack::DO);
 	// Ambiguous: class name, subroutine name, or variable name.
 	std::string name = m_Tokenizer.Identifier();
-	if (std::isupper(name[0]))			// E.g. do Output.print("Hello"); 
-		CompileIdentifier();
-	else
-		CompileIdentifier();
+	CompileIdentifier();
 	CompileSubroutineCall(name);
 	CompileSymbol(';');
 	m_Writer.WritePop(VMWriter::Segment::TEMP, 0);	// Ignore return value.
