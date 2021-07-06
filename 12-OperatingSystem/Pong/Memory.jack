@@ -1,0 +1,95 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+    // Static variables are private in Jack.
+    static Array memory;
+    static Array freeList;
+    static int heapBase;
+    static int heapLast;
+    static int ERR_INVALID_SIZE;
+    static int ERR_HEAP_OVERFLOW;
+    
+    /** Initializes the class. */
+    function void init() {
+        let ERR_INVALID_SIZE = 5;
+        let ERR_HEAP_OVERFLOW = 6;
+        let memory = 0;
+        let heapBase = 2048;
+        let heapLast = 16383;
+        let freeList = heapBase;
+        let freeList[0] = heapLast - heapBase + 1;
+        let freeList[1] = null;
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        return memory[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        // Assuming address is in-range?
+        let memory[address] = value;
+        return;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function int alloc(int size) {
+        // First-fit
+        var boolean found;
+        var Array pre, cur, block;
+        if (size < 1) {
+            do Sys.error(ERR_INVALID_SIZE);
+        }
+        let pre = null;
+        let cur = freeList;
+        let found = false;
+        
+        while(~found)
+        {
+            if (cur = null)
+            {
+                do Sys.error(ERR_HEAP_OVERFLOW);
+            }
+            if(cur[0] > size)      // sgmt.length > size (so length must be at least size + 1)
+            {
+                let found = true;
+            } else {
+                let pre = cur;      // pre = cur
+                let cur = cur[1]; // cur = cur.next
+            }
+        }
+        if ((cur[0] - size) = 1) {      // Remaining fragment is too small.
+            if (~(pre = null)) {        // Found block is not first in list.
+                let pre[1] = cur[1];
+            } else {                    // Update beginning of list.   
+                let freeList = cur[1];
+            }
+        }
+        let block = cur + cur[0] - size;            // Remove needed block from the end of the list.
+        let cur[0] = cur[0] - size -1;              // Update size on freelist.
+        let block[-1] = size + 1;
+        return block;
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+        var Array sgmt;
+        let sgmt = o - 1;
+        let sgmt[0] = o[-1];
+        let sgmt[1] = freeList; // Insert at the beginning of the list.
+        let freeList = sgmt;
+        return;
+    }    
+}
