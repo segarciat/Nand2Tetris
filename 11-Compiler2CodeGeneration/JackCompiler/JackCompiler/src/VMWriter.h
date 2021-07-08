@@ -18,10 +18,6 @@ public:
 	enum class Command {
 		ADD, SUB, NEG, EQ, GT, LT, AND, OR, NOT
 	};
-private:
-	// Outfile file stream with result of generated VM commands.
-	std::ofstream& m_Ofs;
-	static const char* const SegmentToStr(Segment sgmt);
 public:
 	VMWriter(std::ofstream& ofs);
 	~VMWriter();	// Release resources.
@@ -35,5 +31,9 @@ public:
 	void WriteFunction(const std::string& name, int nLocals);
 	void WriteReturn();
 	void Close();	// Close Output file.
+private:
+	// Outfile file stream with result of generated VM commands.
+	std::ofstream& m_Ofs;
+	static const char* const SegmentToStr(Segment sgmt);
 };
 } // namespace jack

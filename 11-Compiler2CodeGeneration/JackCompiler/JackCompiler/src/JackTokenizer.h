@@ -17,18 +17,6 @@ enum class JackTokenType
 */
 class JackTokenizer
 {
-private:
-	// Valid Jack Keywords.
-	static const char* const s_KWs[];
-	// Valid Jack symbols.
-	static const char s_Syms[];
-	// Maximum integer constant in Jack.
-	static const int s_MAX_INT;
-
-	// Input filestream for the relevant Jack source file.
-	std::ifstream& m_Ifs;
-	// Current Jack token parsed from stream.
-	std::string m_CurrentToken;
 public:
 	// Gets file stream ready for parsing.
 	JackTokenizer(std::ifstream& ifs);
@@ -45,5 +33,17 @@ public:
 	const std::string Identifier() const;
 	int IntVal() const;
 	const std::string StringVal() const;
+private:
+	// Valid Jack Keywords.
+	static const char* const s_KWs[];
+	// Valid Jack symbols.
+	static const char s_Syms[];
+	// Maximum integer constant in Jack.
+	static const int s_MAX_INT;
+
+	// Input filestream for the relevant Jack source file.
+	std::ifstream& m_Ifs;
+	// Current Jack token parsed from stream.
+	std::string m_CurrentToken;
 };
 } // namespace jack

@@ -5,8 +5,6 @@
 namespace jack {
 class JackTokenError : public std::exception
 {
-protected:
-	std::string msg_;
 public:
 	JackTokenError(const std::string message) :
 		msg_{ "JackTokenError: " + message } {}
@@ -14,5 +12,7 @@ public:
 	{
 		return msg_.c_str();
 	}
+protected:
+	std::string msg_;
 };
 } // namespace jack

@@ -5,8 +5,6 @@
 namespace jack {
 class JackIdentifierError : public std::exception
 {
-protected:
-	std::string msg_;
 public:
 	JackIdentifierError(const std::string message) :
 		msg_{ "JackIdentifierError: " + message } {}
@@ -14,6 +12,8 @@ public:
 	{
 		return msg_.c_str();
 	}
+protected:
+	std::string msg_;
 };
 } // namespace jack
 

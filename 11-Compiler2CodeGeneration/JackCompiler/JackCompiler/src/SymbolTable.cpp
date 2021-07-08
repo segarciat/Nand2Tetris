@@ -11,7 +11,7 @@ void SymbolTable::StartSubroutine()
 void SymbolTable::Define(const std::string& name, const std::string& type, Kind kind)
 {
 	if (kind == Kind::NONE)
-		throw JackIdentifierError(name);				// Throw invalid kind.
+		throw JackIdentifierError(name);
 	std::unordered_map<std::string, STEntry>& st =
 		(kind == Kind::ARG || kind == Kind::VAR) ? m_FuncST : m_ClassST;
 	// Verify identifier does not already exist.
@@ -22,7 +22,7 @@ void SymbolTable::Define(const std::string& name, const std::string& type, Kind 
 int SymbolTable::VarCount(Kind kind) const
 {
 	if (kind == Kind::NONE)
-		throw JackIdentifierError("Invalid Identifier");// Throw invalid kind.
+		throw JackIdentifierError("Invalid Identifier");
 	const std::unordered_map<std::string, STEntry>& st =
 		(kind == Kind::ARG || kind == Kind::VAR) ? m_FuncST : m_ClassST;
 	// Lambda function in third argument compares by 'kind'.
